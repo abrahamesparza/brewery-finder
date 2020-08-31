@@ -1,0 +1,19 @@
+{
+  "name": "brewery-finder",
+  "version": "1.0.0",
+  "description": "Locate a brewery near you with Brewery Finder.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abrahamesparza/brewery-finder.git"
+  },
+  "author": "Abraham Esparza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abrahamesparza/brewery-finder/issues"
+  },
+  "homepage": "https://github.com/abrahamesparza/brewery-finder#readme"
+}
