@@ -10,16 +10,39 @@ class App extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.findBreweries = this.findBreweries.bind(this);
   }
 
   componentDidMount() {
-    this.findBreweries()
+    // this.findBreweries()
   }
 
   // for making a GET request to the API endpoint
   findBreweries() {
     let { searchBy, query } = this.state;
     //determine if searchBy is city or zipcode to determine whether to make API request to the city endpoint or postal code endpoint
+    if (searchBy === 'City' && query !== '') {
+      fetch(`https://api.openbrewerydb.org/breweries?by_city=${query}`)
+      .then(res => res.json())
+      .then(brews => {
+        console.log('data', brews);
+        this.setState({
+          breweries: brews
+        })
+      })
+      .catch(err => console.error('Errot in GET', err))
+    }
+    else if (searchBy === 'Zipcode' && query !== '') {
+      fetch(`https://api.openbrewerydb.org/breweries?by_postal=${Number(query)}`)
+      .then(res => res.json())
+      .then(brews => {
+        console.log('data', brews);
+        this.setState({
+          breweries: brews
+        })
+      })
+      .catch(err => console.error('Errot in GET', err))
+    }
   }
 
   handleChange(e) {
@@ -33,27 +56,28 @@ class App extends React.Component {
     //updates query search to Zipcode or to City (default)
     this.setState({
       searchBy: e.target.value
-    })
+    });
     this.findBreweries();
   }
 
   render() {
-    let { query, searchBy } = this.state;
+    let { query, searchBy, breweries} = this.state;
     console.log(query);
-    console.log(searchBy);
+    console.log('searchBy', searchBy);
+    console.log('matched:', breweries);
 
     return (
-      <div className='bg-washed-blue'>
+      <div className='pa4 bg-moon-gray'>
         <h1 className='tc'>Brewery Finder</h1>
-        <Search change={this.handleChange} click={this.handleClick}/>
+        <Search change={this.handleChange} click={this.handleClick} search={this.findBreweries} />
       </div>
     )
   }
 }
-
+/* ----------------------------------------------------------------------- */
 //search function
 const Search = props => {
-  let options = ['City', 'Zip Code']
+  let options = ['City', 'Zipcode']
   return (
     <div className='mh7'>
     <input type='text' className='w-80 tc' placeholder='Search by city or zipcode' onChange={props.change}/>
@@ -63,7 +87,8 @@ const Search = props => {
         return (
           <option value={op} key={i}>{op}</option>
         )})}
-      </select>
+      </select><br/>
+      <input type='button' className='ph3' value='Search' onClick={props.search}/>
     </div>
   )
 }
