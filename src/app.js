@@ -13,10 +13,6 @@ class App extends React.Component {
     this.findBreweries = this.findBreweries.bind(this);
   }
 
-  componentDidMount() {
-    // this.findBreweries()
-  }
-
   // for making a GET request to the API endpoint
   findBreweries() {
     let { searchBy, query } = this.state;
@@ -58,15 +54,6 @@ class App extends React.Component {
       searchBy: e.target.value
     });
     this.findBreweries();
-  }
-
-  clearQuery() {
-    let { query } = this.state;
-    if (query === '') {
-      this.setState({
-        matched: []
-      });
-    }
   }
 
   render() {
