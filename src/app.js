@@ -86,15 +86,15 @@ const Search = props => {
   let options = ['City', 'Zipcode']
   return (
     <div className='mh7 cover'>
-    <input type='text' className='w-80 tc' placeholder='Search by city or zipcode' onChange={props.change}/>
-      <select className='w-20 tc' onChange={props.click} >
+    <input type='text' className='w-60 tc' placeholder='Search by city or zipcode' onChange={props.change}/>
+      <select className='w-10 tc ml1' onChange={props.click} >
         {options.map((op, i) => {
           {/* console.log('i',i) */}
         return (
           <option value={op} key={i}>{op}</option>
         )})}
-      </select><br/>
-      <input type='button' className='ph3' value='Search' onClick={props.search}/>
+      </select>
+      <input type='button' className='ph3 w-10 tc ml1' value='Search' onClick={props.search}/>
     </div>
   )
 }
@@ -104,15 +104,26 @@ const Search = props => {
 const BreweryList = props => {
   return (
     <div className='fl w-100 pa2 mt5'>
+      {props.brews.map((brew, i) => (
+        <Brewery key={i} id={brew.id} name={brew.name} phone={brew.phone} street={brew.street} website={brew.website_url}/>
+      ))}
+    </div>
+  )
+}
+
+/* ----------------------------------------------------------------------- */
+const Brewery = props => {
+  return (
+    <div className='tc dt-row-m br2 pa2 ma2 grow bg-dark-gray'>
       <ul className='list'>
-        {props.brews.map(brewery => {
-          return (
-            <a className='link underline-hover washed-blue' key={brewery.id} target='_blank' href={brewery.website_url}>
-              <li className='tc br1 bb b--near-white f2 mh5 grow' key={brewery.id}>{brewery.name}</li>
-            </a>
-          )
-        })}
+        <a className='link underline-hover near-white' key={props.id} target='_blank' href={props.website}>
+          <li className='f3 mh5 grow' key={props.id}>{props.name}</li>
+        </a>
       </ul>
+      <div className='tc'>
+        <p className='tc f4 near-white'>{props.phone}</p>
+        <p className='tc f4 near-white'>{props.street}</p>
+      </div>
     </div>
   )
 }
