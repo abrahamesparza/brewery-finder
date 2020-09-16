@@ -21,7 +21,7 @@ class App extends React.Component {
       fetch(`https://api.openbrewerydb.org/breweries?by_city=${query}`)
       .then(res => res.json())
       .then(brews => {
-        console.log('data', brews);
+        // console.log('data', brews);
         this.setState({
           breweries: brews
         })
@@ -42,7 +42,6 @@ class App extends React.Component {
   }
 
   handleChange(e) {
-    console.log('e', e.target.value);
     this.setState({
       query: e.target.value
     })
@@ -57,10 +56,11 @@ class App extends React.Component {
   }
 
   render() {
+    console.log('Welcome to Brewery Finder! Hope you enjoy and find my mini app useful!\nView other projects created by myself at www.github.com/abrahamesparza')
     let { query, searchBy, breweries} = this.state;
     return (
-      <div className='pa3 bg-moon-gray'>
-        <h1 className='tc f1'>Brewery Finder</h1>
+      <div className='pa3 bg-dark-gray'>
+        <h1 className='tc f1 near-black'>Brewery Finder</h1>
         <Search change={this.handleChange} click={this.handleClick} search={this.findBreweries}/>
         <BreweryList brews={breweries}/>
       </div>
@@ -72,7 +72,7 @@ class App extends React.Component {
 const Search = props => {
   let options = ['City', 'Zipcode']
   return (
-    <div className='mh7 cover'>
+    <div className='ml7 cover'>
     <input type='text' className='w-60 tc' placeholder='Search by city or zipcode' onChange={props.change}/>
       <select className='w-10 tc ml1' onChange={props.click} >
         {options.map((op, i) => {
@@ -109,7 +109,7 @@ const Brewery = props => {
       </ul>
       <div className='tc'>
         <p className='tc f4 near-white'>{props.phone}</p>
-        <p className='tc f4 near-white'>{props.street}</p>
+        <p className='tc f4 near-white bb bw1 b--near-white'>{props.street}</p>
       </div>
     </div>
   )
